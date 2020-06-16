@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RelevantPizza.Data;
 
 namespace RelevantPizza.Migrations
 {
     [DbContext(typeof(PizzaContext))]
-    partial class PizzaContextModelSnapshot : ModelSnapshot
+    [Migration("20200616170318_InitialCreate3")]
+    partial class InitialCreate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,13 +92,13 @@ namespace RelevantPizza.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerID");
+                    b.Property<int?>("CustomerID");
 
                     b.Property<int?>("DriverID");
 
-                    b.Property<DateTime?>("DriverIn");
+                    b.Property<DateTime>("DriverIn");
 
-                    b.Property<DateTime?>("DriverOut");
+                    b.Property<DateTime>("DriverOut");
 
                     b.Property<int>("OrderType");
 
@@ -130,8 +132,7 @@ namespace RelevantPizza.Migrations
                 {
                     b.HasOne("RelevantPizza.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CustomerID");
 
                     b.HasOne("RelevantPizza.Models.Employee", "Driver")
                         .WithMany()

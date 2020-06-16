@@ -47,7 +47,7 @@ namespace RelevantPizza.Controllers
         // GET: Employee/Create
         public IActionResult Create()
         {
-            var employeeVM = new EmployeeViewModel();
+           // var employeeVM = new EmployeeViewModel();
            // employeeVM.Roles = Roles;
             return View();
         }
