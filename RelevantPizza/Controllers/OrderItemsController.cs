@@ -47,9 +47,7 @@ namespace RelevantPizza.Controllers
         // GET: OrderItems/Create
         public IActionResult Create()
         {
-            OrderItemAddViewModel vm = new OrderItemAddViewModel();
-            vm.InventoryList = new List<SelectListItem>();
-            return View(vm);
+            return View(/*vm*/);
         }
 
         // POST: OrderItems/Create
@@ -73,9 +71,9 @@ namespace RelevantPizza.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GetInventoryItems([Bind("InventoryID")] OrderItemAddViewModel orderItemVM)
+        public IActionResult GetInventoryItems(OrderItemAddViewModel orderItemVM)
         {
-            List<InventoryItem> inventoryItems = await _context.InventoryItem.Where(i => i.Type == orderItemVM.InventoryItemType).ToListAsync();
+            List<InventoryItem> inventoryItems = _context.InventoryItem.Where(i => i.Type == orderItemVM.InventoryItemType).ToList();
             var inventoryItemsList = new List<SelectListItem>();
             foreach (InventoryItem item in inventoryItems)
             {
@@ -86,7 +84,19 @@ namespace RelevantPizza.Controllers
             }
 
             orderItemVM.InventoryList = inventoryItemsList;
-            return RedirectToAction("Create","OrderItems",orderItemVM);
+            return View("Create",orderItemVM);
+        }
+
+        // POST: OrderItems/AddInventoryItemToOrderItem
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddInventoryItemToOrderItem(OrderItemAddViewModel orderItemVM)
+        {
+            orderItemVM.OrderItemDetails.Add(_context.InventoryItem.FirstOrDefault(i => i.ID == orderItemVM.InventoryID));
+            
+            return View("Create", orderItemVM);
         }
 
         // GET: OrderItems/Edit/5
