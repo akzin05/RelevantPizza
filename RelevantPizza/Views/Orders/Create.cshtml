@@ -1,8 +1,8 @@
 ﻿@model RelevantPizza.ViewModels.OrderAddViewModel
 
-@{
+@*@{
     ViewData["Title"] = "Create";
-}
+}*@
 
 <h1>Create</h1>
 
@@ -21,12 +21,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="CustomerID" class="control-label"></label>
-                @Html.DropDownList("Customers",Model.CustomerList,
+                @Html.DropDownList("CustomerID", Model.CustomerList,
                 "Select Customer",new {@class = "form-control"})
                 <span asp-validation-for="OrderType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" formaction="AddItem" value="Add Item" class="btn btn-success" />
+            </div>
+            <div class="form-group">
+                <input type="submit" formaction="Create" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

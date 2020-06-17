@@ -19,6 +19,7 @@ namespace RelevantPizza.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<InventoryItem> InventoryItem { get; set; }
+        public object InventoryItems { get; internal set; }
 
         //protected override void OnModelCreating (ModelBuilder modelBuilder)
         //{
